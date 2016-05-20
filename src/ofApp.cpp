@@ -1,13 +1,20 @@
 #include "ofApp.h"
 
+#include "mruby.h"
+
 //--------------------------------------------------------------
 void ofApp::setup(){
-
+    ruby = new ofRuby();
+    ruby->load("app.rb");
+    auto_ptr<ofRubyArgument> args(ruby->buildArgument(2));
+    args->push(1);
+    args->push("Message!");
+    ruby->call("setup", args.get());
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-
+    ruby->call("update");
 }
 
 //--------------------------------------------------------------
