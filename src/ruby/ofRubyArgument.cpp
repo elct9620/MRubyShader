@@ -33,7 +33,3 @@ void ofRubyArgument::push(double value) {
 void ofRubyArgument::push(const char *value) {
     push(mrb_str_new_cstr(mrb, value));
 }
-
-mrb_value* ofRubyArgument::getArgument() {
-    return args;
-}

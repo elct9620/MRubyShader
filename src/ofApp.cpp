@@ -1,15 +1,19 @@
 #include "ofApp.h"
 
-#include "mruby.h"
+#include "ofRuby3DPrimitive.hpp"
+#include "ofRuby3DSphere.hpp"
 
 //--------------------------------------------------------------
 void ofApp::setup(){
     ruby = new ofRuby();
+    
+    // Add Built-in class
+    ruby->loadClass<ofRuby3DPrimitive>();
+    ruby->loadClassFrom<ofRuby3DSphere>("Primitive");
+    
     ruby->load("app.rb");
-    auto_ptr<ofRubyArgument> args(ruby->buildArgument(2));
-    args->push(1);
-    args->push("Message!");
-    ruby->call("setup", args.get());
+    
+    ruby->call("setup");
 }
 
 //--------------------------------------------------------------
@@ -19,7 +23,7 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-
+    ruby->call("draw");
 }
 
 //--------------------------------------------------------------

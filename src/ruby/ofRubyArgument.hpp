@@ -17,7 +17,6 @@
 class ofRubyArgument {
 public:
     ofRubyArgument(mrb_state* mrb, int size): mrb(mrb), size(size), argc(0) {
-        // TODO: Specify size will speed up running?
         args = new mrb_value[size];
     };
     ~ofRubyArgument() {
@@ -30,8 +29,10 @@ public:
     void push(double value);
     void push(const char* value);
     
-    mrb_value* getArgument();
-    int getArgumentCount() {
+    mrb_value* getValues() {
+        return args;
+    };
+    int getCount() {
         return argc;
     };
     
