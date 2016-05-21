@@ -48,30 +48,6 @@ bool ofRuby::call(const char* methodName, mrb_value context, int argc, mrb_value
     mrb_funcall_argv(mrb, context, symbol, argc, argv);
     checkError();
 }
-/*
-template<class T>
-void ofRuby::loadClass() {
-    loadClass<T>(NULL);
-}
-
-template<class T>
-void ofRuby::loadClassFrom(const char* superClassName) {
-    if(classes[T::NAME] != NULL) {
-        ofLog(ofLogLevel::OF_LOG_ERROR, "Class already loaded");
-        return;
-    }
-    
-    RClass* superClass = classes[T::NAME];
-    if(superClass == NULL) {
-        superClass = mrb->object_class;
-    }
-    
-    RClass* klass = mrb_define_class(mrb, T::NAME, superClass);
-    T::setup(mrb, klass);
-    
-    classes[T::NAME] = klass;
-}
- */
 
 void ofRuby::checkError() {
     // Very simple error check by mrb->exc check
