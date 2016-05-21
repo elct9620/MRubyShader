@@ -2,6 +2,8 @@
 
 #include "ofRuby3DPrimitive.hpp"
 #include "ofRuby3DSphere.hpp"
+#include "ofRubyVector2D.hpp"
+#include "ofRubyVector3D.hpp"
 
 //--------------------------------------------------------------
 void ofApp::setup(){
@@ -10,6 +12,8 @@ void ofApp::setup(){
     // Add Built-in class
     ruby->loadClass<ofRuby3DPrimitive>();
     ruby->loadClassFrom<ofRuby3DSphere>("Primitive");
+    ruby->loadClass<ofRubyVector2D>();
+    ruby->loadClassFrom<ofRubyVector3D>("Vector2D");
     
     ruby->load("app.rb");
     

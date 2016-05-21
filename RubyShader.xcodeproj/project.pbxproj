@@ -20,6 +20,8 @@
 		E4D8E2B61CEF757200489045 /* ofRubyClass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4D8E2B41CEF757200489045 /* ofRubyClass.cpp */; };
 		E4D8E2BE1CF0077000489045 /* ofRuby3DPrimitive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4D8E2BC1CF0077000489045 /* ofRuby3DPrimitive.cpp */; };
 		E4D8E2C11CF0337B00489045 /* ofRuby3DSphere.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4D8E2BF1CF0337B00489045 /* ofRuby3DSphere.cpp */; };
+		E4D8E2C41CF0502400489045 /* ofRubyVector2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4D8E2C21CF0502400489045 /* ofRubyVector2D.cpp */; };
+		E4D8E2C81CF053CD00489045 /* ofRubyVector3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4D8E2C61CF053CD00489045 /* ofRubyVector3D.cpp */; };
 		EC26F225D807F4F069405924 /* ofxThreadedImageLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45B576A8B106CBE71564781C /* ofxThreadedImageLoader.cpp */; };
 /* End PBXBuildFile section */
 
@@ -117,6 +119,10 @@
 		E4D8E2BD1CF0077000489045 /* ofRuby3DPrimitive.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ofRuby3DPrimitive.hpp; path = ruby/3d/ofRuby3DPrimitive.hpp; sourceTree = "<group>"; };
 		E4D8E2BF1CF0337B00489045 /* ofRuby3DSphere.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofRuby3DSphere.cpp; path = ruby/3d/ofRuby3DSphere.cpp; sourceTree = "<group>"; };
 		E4D8E2C01CF0337B00489045 /* ofRuby3DSphere.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ofRuby3DSphere.hpp; path = ruby/3d/ofRuby3DSphere.hpp; sourceTree = "<group>"; };
+		E4D8E2C21CF0502400489045 /* ofRubyVector2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofRubyVector2D.cpp; path = ruby/3d/ofRubyVector2D.cpp; sourceTree = "<group>"; };
+		E4D8E2C31CF0502400489045 /* ofRubyVector2D.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ofRubyVector2D.hpp; path = ruby/3d/ofRubyVector2D.hpp; sourceTree = "<group>"; };
+		E4D8E2C61CF053CD00489045 /* ofRubyVector3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofRubyVector3D.cpp; path = ruby/3d/ofRubyVector3D.cpp; sourceTree = "<group>"; };
+		E4D8E2C71CF053CD00489045 /* ofRubyVector3D.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ofRubyVector3D.hpp; path = ruby/3d/ofRubyVector3D.hpp; sourceTree = "<group>"; };
 		E4EB691F138AFCF100A09F29 /* CoreOF.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = CoreOF.xcconfig; path = ../../../libs/openFrameworksCompiled/project/osx/CoreOF.xcconfig; sourceTree = SOURCE_ROOT; };
 		E4EB6923138AFD0F00A09F29 /* Project.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Project.xcconfig; sourceTree = "<group>"; };
 		E83EDA0A1919173D8498F392 /* anim.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = anim.h; path = ../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp/anim.h; sourceTree = SOURCE_ROOT; };
@@ -311,6 +317,10 @@
 				E4D8E2BD1CF0077000489045 /* ofRuby3DPrimitive.hpp */,
 				E4D8E2BF1CF0337B00489045 /* ofRuby3DSphere.cpp */,
 				E4D8E2C01CF0337B00489045 /* ofRuby3DSphere.hpp */,
+				E4D8E2C21CF0502400489045 /* ofRubyVector2D.cpp */,
+				E4D8E2C31CF0502400489045 /* ofRubyVector2D.hpp */,
+				E4D8E2C61CF053CD00489045 /* ofRubyVector3D.cpp */,
+				E4D8E2C71CF053CD00489045 /* ofRubyVector3D.hpp */,
 			);
 			name = 3d;
 			sourceTree = "<group>";
@@ -463,11 +473,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E4D8E2C41CF0502400489045 /* ofRubyVector2D.cpp in Sources */,
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
 				E4D8E2A91CEF0EF600489045 /* ofRuby.cpp in Sources */,
 				E4D8E2B61CEF757200489045 /* ofRubyClass.cpp in Sources */,
 				E4D8E2C11CF0337B00489045 /* ofRuby3DSphere.cpp in Sources */,
+				E4D8E2C81CF053CD00489045 /* ofRubyVector3D.cpp in Sources */,
 				E4D8E2AC1CEF393A00489045 /* ofRubyArgument.cpp in Sources */,
 				E4D8E2BE1CF0077000489045 /* ofRuby3DPrimitive.cpp in Sources */,
 				3B8120368B4FCCD80883BAF3 /* ofxAssimpAnimation.cpp in Sources */,
