@@ -12,6 +12,7 @@
 #include <stdio.h>
 
 #include "ofRuby3DPrimitive.hpp"
+#include "ofRubyVector3D.hpp"
 
 #include "mruby.h"
 #include "mruby/data.h"

@@ -25,9 +25,7 @@ public:
     
     static const char* NAME;
     
-    struct Vector {
-        float x;
-        float y;
+    struct Vector : ofRubyVector2D::Vector {
         float z;
     };
     
@@ -35,6 +33,9 @@ public:
     
     static mrb_value init(mrb_state* mrb, mrb_value self);
     static struct Vector* alloc(mrb_state* mrb);
+    
+    // Class Method
+    static mrb_value getZ(mrb_state* mrb, mrb_value slef);
 };
 
 static struct mrb_data_type ofRubyVector3DType = { "Vector3D", ofRubyVector3D::free };

@@ -41,7 +41,7 @@ mrb_value ofRuby3DSphere::init(mrb_state *mrb, mrb_value self) {
     }
     
     if(argc > 1) { // Position given
-        // TODO: Implement position assign
+        mrb_funcall(mrb, self, "position=", 1, position);
     }
     
     

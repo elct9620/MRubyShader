@@ -53,6 +53,11 @@ void ofRuby3DPrimitive::setup(mrb_state *mrb, RClass *klass) {
     mrb_define_method(mrb, klass, "initialize", init, MRB_ARGS_NONE());
     
     mrb_define_method(mrb, klass, "draw", draw, MRB_ARGS_OPT(1));
+    mrb_define_method(mrb, klass, "move", move, MRB_ARGS_REQ(1));
+    mrb_define_method(mrb, klass, "x", getX, MRB_ARGS_NONE());
+    mrb_define_method(mrb, klass, "y", getX, MRB_ARGS_NONE());
+    mrb_define_method(mrb, klass, "z", getX, MRB_ARGS_NONE());
+    mrb_define_method(mrb, klass, "position=", setPosition, MRB_ARGS_REQ(1));
 }
 
 // Instance Methods
@@ -62,4 +67,75 @@ mrb_value ofRuby3DPrimitive::draw(mrb_state *mrb, mrb_value self) {
     primitive->instance->draw();
     
     return self;
+}
+
+mrb_value ofRuby3DPrimitive::move(mrb_state *mrb, mrb_value self) {
+    Primitive* primivite;
+    primivite = (Primitive*) DATA_PTR(self);
+    
+    mrb_value offset;
+    mrb_get_args(mrb, "o", &offset);
+    
+    primivite->instance->move(getVector3DFromRuby(offset));
+    return self;
+}
+
+mrb_value ofRuby3DPrimitive::getX(mrb_state* mrb, mrb_value self) {
+    Primitive* primivite;
+    primivite = (Primitive*) DATA_PTR(self);
+    return mrb_float_value(mrb, primivite->instance->getX());
+}
+
+mrb_value ofRuby3DPrimitive::getY(mrb_state* mrb, mrb_value self) {
+    Primitive* primivite;
+    primivite = (Primitive*) DATA_PTR(self);
+    return mrb_float_value(mrb, primivite->instance->getY());
+}
+
+mrb_value ofRuby3DPrimitive::getZ(mrb_state* mrb, mrb_value self) {
+    Primitive* primivite;
+    primivite = (Primitive*) DATA_PTR(self);
+    return mrb_float_value(mrb, primivite->instance->getZ());
+}
+
+
+mrb_value ofRuby3DPrimitive::setPosition(mrb_state *mrb, mrb_value self) {
+    
+    // TODO: Support Vector and pure float both
+    
+    Primitive* primitive;
+    primitive = (Primitive*) DATA_PTR(self);
+    
+    mrb_value newPosition;
+    mrb_get_args(mrb, "o", &newPosition);
+    
+    primitive->instance->setPosition(getVector3DFromRuby(newPosition));
+    return self;
+}
+
+// Helper Method
+ofVec3f ofRuby3DPrimitive::getVector3DFromRuby(mrb_value object) {
+    const mrb_data_type* type = DATA_TYPE(object);
+    string typeName(type->struct_name);
+    ofVec3f vector(0, 0, 0);
+    
+    
+    // FIX: Data Type pointer not same as DATA_TYPE(object) pointer
+    if(typeName == "Vector2D") {
+        ofRubyVector2D::Vector* data;
+        data = (ofRubyVector2D::Vector*) DATA_PTR(object);
+        vector.x = data->x;
+        vector.y = data->y;
+    }
+    
+    if(typeName == "Vector3D") {
+        ofRubyVector3D::Vector* data;
+        data = (ofRubyVector3D::Vector*) DATA_PTR(object);
+        vector.x = data->x;
+        vector.y = data->y;
+        vector.z = data->z;
+    }
+    
+    return vector;
+    
 }

@@ -13,7 +13,6 @@
 
 #include "ofMain.h"
 #include "ofRubyArgument.hpp"
-#include "ofRubyClass.hpp"
 
 #include "mruby.h"
 #include "mruby/compile.h"

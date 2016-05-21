@@ -33,6 +33,11 @@ public:
     static mrb_value init(mrb_state* mrb, mrb_value self);
     static void free(mrb_state* mrb, void *ptr);
     static struct Vector* alloc(mrb_state* mrb);
+    
+    // Class Method
+    static mrb_value add(mrb_state* mrb, mrb_value self);
+    static mrb_value getX(mrb_state* mrb, mrb_value self);
+    static mrb_value getY(mrb_state* mrb, mrb_value self);
 };
 
 static struct mrb_data_type ofRubyVector2DType = { "Vector2D", ofRubyVector2D::free };

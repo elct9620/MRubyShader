@@ -13,6 +13,9 @@
 
 #include "ofMain.h"
 
+#include "ofRubyVector2D.hpp"
+#include "ofRubyVector3D.hpp"
+
 #include "mruby.h"
 #include "mruby/data.h"
 #include "mruby/class.h"
@@ -35,6 +38,14 @@ public:
     
     // Instance method
     static mrb_value draw(mrb_state* mrb, mrb_value self);
+    static mrb_value move(mrb_state* mrb, mrb_value self);
+    static mrb_value getX(mrb_state* mrb, mrb_value self);
+    static mrb_value getY(mrb_state* mrb, mrb_value self);
+    static mrb_value getZ(mrb_state* mrb, mrb_value self);
+    static mrb_value setPosition(mrb_state* mrb, mrb_value self);
+    
+    // Helper Method
+    static ofVec3f getVector3DFromRuby(mrb_value object);
 };
 
 static struct mrb_data_type ofRuby3DPrimitiveType = { "Primitive", ofRuby3DPrimitive::free };

@@ -20,10 +20,6 @@ struct ofRubyVector2D::Vector* ofRubyVector2D::alloc(mrb_state *mrb) {
     return vector;
 }
 
-void ofRubyVector2D::setup(mrb_state *mrb, RClass *klass) {
-    mrb_define_method(mrb, klass, "initialize", init, MRB_ARGS_REQ(2));
-}
-
 mrb_value ofRubyVector2D::init(mrb_state *mrb, mrb_value self) {
     
     struct Vector* vector;
@@ -50,4 +46,39 @@ mrb_value ofRubyVector2D::init(mrb_state *mrb, mrb_value self) {
     vector->y = mrb_float(y);
     
     return self;
+}
+
+void ofRubyVector2D::setup(mrb_state *mrb, RClass *klass) {
+    mrb_define_method(mrb, klass, "initialize", init, MRB_ARGS_REQ(2));
+    
+    mrb_define_method(mrb, klass, "add", add, MRB_ARGS_REQ(2));
+    mrb_define_method(mrb, klass, "x", getX, MRB_ARGS_NONE());
+    mrb_define_method(mrb, klass, "y", getY, MRB_ARGS_NONE());
+}
+
+mrb_value ofRubyVector2D::add(mrb_state *mrb, mrb_value self) {
+    
+    Vector* vector;
+    mrb_value x;
+    mrb_value y;
+    
+    mrb_get_args(mrb, "ff", &x, &y);
+    
+    vector = (Vector*) DATA_PTR(self);
+    vector->x = vector->x + mrb_float(x);
+    vector->y = vector->y + mrb_float(y);
+    
+    return self;
+}
+
+mrb_value ofRubyVector2D::getX(mrb_state* mrb, mrb_value self) {
+    Vector* vector;
+    vector = (Vector*) DATA_PTR(self);
+    return mrb_float_value(mrb, vector->x);
+}
+
+mrb_value ofRubyVector2D::getY(mrb_state *mrb, mrb_value self) {
+    Vector* vector;
+    vector = (Vector*) DATA_PTR(self);
+    return mrb_float_value(mrb, vector->y);
 }

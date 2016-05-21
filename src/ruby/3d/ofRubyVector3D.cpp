@@ -48,4 +48,12 @@ mrb_value ofRubyVector3D::init(mrb_state *mrb, mrb_value self) {
 
 void ofRubyVector3D::setup(mrb_state *mrb, RClass *klass) {
     mrb_define_method(mrb, klass, "initialize", init, MRB_ARGS_REQ(3));
+    
+    mrb_define_method(mrb, klass, "z", getZ, MRB_ARGS_NONE());
+}
+
+mrb_value ofRubyVector3D::getZ(mrb_state *mrb, mrb_value self) {
+    Vector* vector;
+    vector = (Vector*) DATA_PTR(self);
+    return mrb_float_value(mrb, vector->z);
 }
