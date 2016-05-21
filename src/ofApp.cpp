@@ -1,10 +1,5 @@
 #include "ofApp.h"
 
-#include "ofRuby3DPrimitive.hpp"
-#include "ofRuby3DSphere.hpp"
-#include "ofRubyVector2D.hpp"
-#include "ofRubyVector3D.hpp"
-
 //--------------------------------------------------------------
 void ofApp::setup(){
     ruby = new ofRuby();
@@ -14,6 +9,7 @@ void ofApp::setup(){
     ruby->loadClassFrom<ofRuby3DSphere>("Primitive");
     ruby->loadClass<ofRubyVector2D>();
     ruby->loadClassFrom<ofRubyVector3D>("Vector2D");
+    ruby->loadClass<ofRubyShader>();
     
     ruby->load("app.rb");
     

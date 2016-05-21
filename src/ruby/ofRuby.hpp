@@ -12,7 +12,6 @@
 #include <stdio.h>
 
 #include "ofMain.h"
-#include "ofRubyArgument.hpp"
 
 #include "mruby.h"
 #include "mruby/compile.h"
@@ -20,6 +19,17 @@
 #include "mruby/data.h"
 #include "mruby/class.h"
 #include "mruby/array.h"
+
+// Headers --- BEGIN
+
+#include "ofRubyArgument.hpp"
+#include "ofRuby3DPrimitive.hpp"
+#include "ofRuby3DSphere.hpp"
+#include "ofRubyVector2D.hpp"
+#include "ofRubyVector3D.hpp"
+#include "ofRubyShader.hpp"
+
+// Headers --- END
 
 class ofRuby {
 public:
