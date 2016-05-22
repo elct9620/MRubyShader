@@ -30,6 +30,10 @@ void ofRubyShader::setup(mrb_state *mrb, RClass *klass) {
     mrb_define_method(mrb, klass, "initialize", init, MRB_ARGS_NONE());
     
     mrb_define_method(mrb, klass, "draw", draw, MRB_ARGS_REQ(1));
+    mrb_define_method(mrb, klass, "vertex_shader=", setVertexShader, MRB_ARGS_REQ(1));
+    mrb_define_method(mrb, klass, "fragment_shader=", setFragmentShader, MRB_ARGS_REQ(1));
+    mrb_define_method(mrb, klass, "bind", bind, MRB_ARGS_OPT(3));
+    mrb_define_method(mrb, klass, "link", link, MRB_ARGS_NONE());
 }
 
 mrb_value ofRubyShader::init(mrb_state *mrb, mrb_value self) {
@@ -48,27 +52,7 @@ mrb_value ofRubyShader::init(mrb_state *mrb, mrb_value self) {
     shader->instance = new ofShader();
     
     DATA_PTR(self) = shader;
-    
-    stringstream vertexSrc;
-    vertexSrc << "#version 150\n";
-    vertexSrc << "uniform mat4 modelViewProjectionMatrix;\n";
-    vertexSrc  << "in vec4 position;\n";
-    vertexSrc  << "void main(void){\n";
-    vertexSrc  << "\tgl_Position=modelViewProjectionMatrix*position;\n";
-    vertexSrc  << "}\n";
-    
-    stringstream fragmentSrc;
-    fragmentSrc << "#version 150\n";
-    fragmentSrc << "out vec4 outputColor;\n";
-    fragmentSrc << "void main(void) {\n";
-    fragmentSrc << "\toutputColor = vec4(1, 0, 0, 1);\n";
-    fragmentSrc << "}\n";
-
-    shader->instance->setupShaderFromSource(GL_VERTEX_SHADER, vertexSrc.str());
-    shader->instance->setupShaderFromSource(GL_FRAGMENT_SHADER, fragmentSrc.str());
-    shader->instance->bindDefaults();
-    shader->instance->linkProgram();
-    
+        
     return self;
 }
 
@@ -82,6 +66,50 @@ mrb_value ofRubyShader::draw(mrb_state *mrb, mrb_value self) {
     shader->instance->begin();
     mrb_funcall(mrb, block, "call", 0); // Call block
     shader->instance->end();
+    
+    return self;
+}
+
+mrb_value ofRubyShader::bind(mrb_state* mrb, mrb_value self) {
+    Shader* shader;
+    shader = (Shader*) DATA_PTR(self);
+    
+    shader->instance->bindDefaults();
+    
+    return self;
+}
+
+mrb_value ofRubyShader::link(mrb_state* mrb, mrb_value self) {
+    Shader* shader;
+    shader = (Shader*) DATA_PTR(self);
+    
+    shader->instance->linkProgram();
+    
+    return self;
+}
+
+mrb_value ofRubyShader::setVertexShader(mrb_state *mrb, mrb_value self) {
+    Shader* shader;
+    shader = (Shader*) DATA_PTR(self);
+    
+    mrb_value shaderValue;
+    mrb_get_args(mrb, "S", &shaderValue);
+    string shaderCode(mrb_string_value_ptr(mrb, shaderValue));
+    
+    shader->instance->setupShaderFromSource(GL_VERTEX_SHADER, shaderCode);
+    
+    return self;
+}
+
+mrb_value ofRubyShader::setFragmentShader(mrb_state *mrb, mrb_value self) {
+    Shader* shader;
+    shader = (Shader*) DATA_PTR(self);
+    
+    mrb_value shaderValue;
+    mrb_get_args(mrb, "S", &shaderValue);
+    string shaderCode(mrb_string_value_ptr(mrb, shaderValue));
+    
+    shader->instance->setupShaderFromSource(GL_FRAGMENT_SHADER, shaderCode);
     
     return self;
 }
