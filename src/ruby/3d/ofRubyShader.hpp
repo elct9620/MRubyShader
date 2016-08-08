@@ -35,7 +35,7 @@ public:
     // Instance method
     static mrb_value draw(mrb_state* mrb, mrb_value self);
     static mrb_value bind(mrb_state* mrb, mrb_value self);
-    static mrb_value link(mrb_state* mrb, mrb_value slef);
+    static mrb_value apply(mrb_state* mrb, mrb_value slef);
     static mrb_value setVertexShader(mrb_state* mrb, mrb_value self);
     static mrb_value setFragmentShader(mrb_state* mrb, mrb_value self);
     

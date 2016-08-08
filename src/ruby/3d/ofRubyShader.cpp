@@ -30,10 +30,10 @@ void ofRubyShader::setup(mrb_state *mrb, RClass *klass) {
     mrb_define_method(mrb, klass, "initialize", init, MRB_ARGS_NONE());
     
     mrb_define_method(mrb, klass, "draw", draw, MRB_ARGS_REQ(1));
-    mrb_define_method(mrb, klass, "vertex_shader=", setVertexShader, MRB_ARGS_REQ(1));
-    mrb_define_method(mrb, klass, "fragment_shader=", setFragmentShader, MRB_ARGS_REQ(1));
+    mrb_define_method(mrb, klass, "vertex=", setVertexShader, MRB_ARGS_REQ(1));
+    mrb_define_method(mrb, klass, "fragment=", setFragmentShader, MRB_ARGS_REQ(1));
     mrb_define_method(mrb, klass, "bind", bind, MRB_ARGS_OPT(3));
-    mrb_define_method(mrb, klass, "link", link, MRB_ARGS_NONE());
+    mrb_define_method(mrb, klass, "apply", apply, MRB_ARGS_NONE());
 }
 
 mrb_value ofRubyShader::init(mrb_state *mrb, mrb_value self) {
@@ -52,7 +52,7 @@ mrb_value ofRubyShader::init(mrb_state *mrb, mrb_value self) {
     shader->instance = new ofShader();
     
     DATA_PTR(self) = shader;
-        
+    
     return self;
 }
 
@@ -79,7 +79,7 @@ mrb_value ofRubyShader::bind(mrb_state* mrb, mrb_value self) {
     return self;
 }
 
-mrb_value ofRubyShader::link(mrb_state* mrb, mrb_value self) {
+mrb_value ofRubyShader::apply(mrb_state* mrb, mrb_value self) {
     Shader* shader;
     shader = (Shader*) DATA_PTR(self);
     
