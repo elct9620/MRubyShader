@@ -42,7 +42,7 @@ public:
     bool call(const char* methodName, ofRubyArgument* arg);
     bool call(const char* methodName, mrb_value context, int argc, mrb_value* argv);
     bool constDefined(const char* constName);
-    mrb_value createObject(const char* className);
+    mrb_value newObject(const char* className);
     
     ofRubyArgument* buildArgument(int size) {
         return new ofRubyArgument(mrb, size);

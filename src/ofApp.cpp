@@ -13,7 +13,7 @@ void ofApp::setup(){
     
     ruby->load("app.rb");
     if(ruby->constDefined("Application")) {
-        appInstance = ruby->createObject("Application");
+        appInstance = ruby->newObject("Application");
         ruby->call("setup", appInstance, 0, NULL);
     } else {
         ofSystemAlertDialog("The \"Application\" class is not exists.");

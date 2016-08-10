@@ -54,7 +54,7 @@ bool ofRuby::constDefined(const char* constName) {
     return mrb_const_defined(mrb, mrb_obj_value(mrb->object_class), id);
 }
 
-mrb_value ofRuby::createObject(const char *className) {
+mrb_value ofRuby::newObject(const char *className) {
     RClass* klass = mrb_class_get(mrb, className);
     mrb_int argc = 0;
     return mrb_obj_new(mrb, klass, argc, NULL);
