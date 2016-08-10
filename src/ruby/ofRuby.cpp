@@ -28,13 +28,12 @@ void ofRuby::load(ofFile file) {
         return;
     }
     
+    ofLog(ofLogLevel::OF_LOG_NOTICE, "Reading file: %s", file.path().c_str());
+    
     ofBuffer sourceCode = file.readToBuffer();
     mrb_load_string(mrb, sourceCode.getData());
     
-    if(mrb->exc) {
-        // TODO: Handle Exception
-    }
-    
+    checkError();
     file.close();
 }
 
@@ -50,7 +49,7 @@ void ofRuby::loadDirectory(const std::string path) {
     std::vector<ofFile> codes = sourceDirectory.getFiles();
     
     for(ofFile file : codes) {
-        load(file);
+        load(file.path());
     }
     sourceDirectory.close();
 }
