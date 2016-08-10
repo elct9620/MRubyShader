@@ -129,5 +129,10 @@ Desktop.ini
 .mailmap
 /apps*/
 # Build Files
-build/
-!build/data/lib
+!build/
+
+build/*
+!build/data/
+
+build/data/*
+!build/data/lib/
