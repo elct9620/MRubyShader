@@ -19,20 +19,40 @@ ofRuby::~ofRuby() {
 
 void ofRuby::load(const std::string path) {
     ofFile sourceFile(ofToDataPath(path));
-    
-    if(!sourceFile.exists()) {
+    load(sourceFile);
+}
+
+void ofRuby::load(ofFile file) {
+    if(!file.exists()) {
         ofLog(ofLogLevel::OF_LOG_WARNING, "Ruby file not exists");
         return;
     }
     
-    ofBuffer sourceCode = sourceFile.readToBuffer();
+    ofBuffer sourceCode = file.readToBuffer();
     mrb_load_string(mrb, sourceCode.getData());
     
     if(mrb->exc) {
         // TODO: Handle Exception
     }
     
-    sourceFile.close();
+    file.close();
+}
+
+void ofRuby::loadDirectory(const std::string path) {
+    ofDirectory sourceDirectory(ofToDataPath(path));
+    
+    if(!sourceDirectory.exists()) {
+        ofLog(ofLogLevel::OF_LOG_WARNING, "Source directory not exists");
+        return;
+    }
+    
+    sourceDirectory.allowExt("rb");
+    std::vector<ofFile> codes = sourceDirectory.getFiles();
+    
+    for(ofFile file : codes) {
+        load(file);
+    }
+    sourceDirectory.close();
 }
 
 bool ofRuby::call(const char* methodName) {

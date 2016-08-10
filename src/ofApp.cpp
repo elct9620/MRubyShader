@@ -11,6 +11,7 @@ void ofApp::setup(){
     ruby->loadClassFrom<ofRubyVector3D>("Vector2D");
     ruby->loadClass<ofRubyShader>();
     
+    ruby->loadDirectory("DSL");
     ruby->load("app.rb");
     if(ruby->constDefined("Application")) {
         appInstance = ruby->newObject("Application");

@@ -38,6 +38,8 @@ public:
     ~ofRuby();
     
     void load(const std::string path);
+    void load(ofFile file);
+    void loadDirectory(const std::string path);
     bool call(const char* methodName);
     bool call(const char* methodName, ofRubyArgument* arg);
     bool call(const char* methodName, mrb_value context, int argc, mrb_value* argv);
