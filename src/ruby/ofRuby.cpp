@@ -49,6 +49,18 @@ bool ofRuby::call(const char* methodName, mrb_value context, int argc, mrb_value
     checkError();
 }
 
+bool ofRuby::constDefined(const char* constName) {
+    mrb_sym id(mrb_intern_cstr(mrb, constName));
+    return mrb_const_defined(mrb, mrb_obj_value(mrb->object_class), id);
+}
+
+mrb_value ofRuby::createObject(const char *className) {
+    RClass* klass = mrb_class_get(mrb, className);
+    mrb_int argc = 0;
+    return mrb_obj_new(mrb, klass, argc, NULL);
+}
+
+
 void ofRuby::checkError() {
     // Very simple error check by mrb->exc check
     

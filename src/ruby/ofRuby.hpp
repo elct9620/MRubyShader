@@ -19,6 +19,7 @@
 #include "mruby/data.h"
 #include "mruby/class.h"
 #include "mruby/array.h"
+#include "mruby/variable.h"
 
 // Headers --- BEGIN
 
@@ -40,6 +41,8 @@ public:
     bool call(const char* methodName);
     bool call(const char* methodName, ofRubyArgument* arg);
     bool call(const char* methodName, mrb_value context, int argc, mrb_value* argv);
+    bool constDefined(const char* constName);
+    mrb_value createObject(const char* className);
     
     ofRubyArgument* buildArgument(int size) {
         return new ofRubyArgument(mrb, size);

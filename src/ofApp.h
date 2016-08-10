@@ -24,4 +24,5 @@ class ofApp : public ofBaseApp{
 		
     private:
         ofRuby* ruby;
+        mrb_value appInstance;
 };

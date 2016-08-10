@@ -12,18 +12,24 @@ void ofApp::setup(){
     ruby->loadClass<ofRubyShader>();
     
     ruby->load("app.rb");
+    if(ruby->constDefined("Application")) {
+        appInstance = ruby->createObject("Application");
+        ruby->call("setup", appInstance, 0, NULL);
+    } else {
+        ofSystemAlertDialog("The \"Application\" class is not exists.");
+        ofExit();
+    }
     
-    ruby->call("setup");
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    ruby->call("update");
+    ruby->call("update", appInstance, 0, NULL);
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    ruby->call("draw");
+    ruby->call("draw", appInstance, 0, NULL);
 }
 
 //--------------------------------------------------------------
