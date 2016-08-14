@@ -11,6 +11,8 @@
 ofRuby::ofRuby() {
     // Initialize MRuby
     mrb = mrb_open();
+    
+    mrb_define_method(mrb, mrb->kernel_module, "require", require, MRB_ARGS_REQ(1));
 }
 
 ofRuby::~ofRuby() {
@@ -79,6 +81,33 @@ mrb_value ofRuby::newObject(const char *className) {
     return mrb_obj_new(mrb, klass, argc, NULL);
 }
 
+/**
+ * TODO: Let it managed by ofRuby
+ */
+mrb_value ofRuby::require(mrb_state *mrb, mrb_value self) {
+    mrb_value fileName;
+    mrb_get_args(mrb, "S", &fileName);
+    const char* sourceFileWithoutExtension = mrb_string_value_cstr(mrb, &fileName);
+    std::string sourceFileWithExtension(sourceFileWithoutExtension);
+    sourceFileWithExtension.append(".rb");
+    ofFile sourceFile(ofToDataPath(sourceFileWithExtension));
+    
+    if(!sourceFile.exists()) {
+        ofLog(ofLogLevel::OF_LOG_ERROR, "File %s not exists", sourceFile.path().c_str());
+        return;
+    }
+    
+    ofLog(ofLogLevel::OF_LOG_NOTICE, "Require file: %s", sourceFile.path().c_str());
+    
+    ofBuffer sourceCode = sourceFile.readToBuffer();
+    mrb_load_string(mrb, sourceCode.getData());
+    
+    if(mrb->exc) {
+        mrb_value exception = mrb_obj_value(mrb->exc);
+        string message(mrb_string_value_ptr(mrb, exception));
+        ofLog(ofLogLevel::OF_LOG_ERROR, message);
+    }
+}
 
 void ofRuby::checkError() {
     // Very simple error check by mrb->exc check

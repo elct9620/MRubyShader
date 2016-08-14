@@ -2,7 +2,14 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+    ofEnableSeparateSpecularLight();
+    ofEnableDepthTest();
+    glShadeModel(GL_SMOOTH);
+    glEnable(GL_NORMALIZE);
+    
     ruby = new ofRuby();
+    
+    light.enable();
     
     // Add Built-in class
     ruby->loadClass<ofRuby3DPrimitive>();
@@ -10,8 +17,9 @@ void ofApp::setup(){
     ruby->loadClass<ofRubyVector2D>();
     ruby->loadClassFrom<ofRubyVector3D>("Vector2D");
     ruby->loadClass<ofRubyShader>();
+    ruby->loadClass<ofRubyModel>();
     
-    ruby->loadDirectory("lib");
+    ruby->load("lib/material.rb");
     ruby->load("app.rb");
     if(ruby->constDefined("Application")) {
         appInstance = ruby->newObject("Application");
@@ -30,6 +38,7 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+    //ofClear(0);
     ruby->call("draw", appInstance, 0, NULL);
 }
 

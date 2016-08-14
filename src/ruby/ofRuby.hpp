@@ -29,6 +29,7 @@
 #include "ofRubyVector2D.hpp"
 #include "ofRubyVector3D.hpp"
 #include "ofRubyShader.hpp"
+#include "ofRubyModel.hpp"
 
 // Headers --- END
 
@@ -45,6 +46,8 @@ public:
     bool call(const char* methodName, mrb_value context, int argc, mrb_value* argv);
     bool constDefined(const char* constName);
     mrb_value newObject(const char* className);
+    
+    static mrb_value require(mrb_state* mrb, mrb_value self);
     
     ofRubyArgument* buildArgument(int size) {
         return new ofRubyArgument(mrb, size);

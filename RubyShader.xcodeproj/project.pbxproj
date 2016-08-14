@@ -11,6 +11,7 @@
 		483FA4F6D5FA6422C559B1F5 /* ofxAssimpMeshHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F67FE68E327BEFBD4B777571 /* ofxAssimpMeshHelper.cpp */; };
 		8DED5056525646FA71980866 /* ofxAssimpModelLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDE55D82BD962DAC0E94B708 /* ofxAssimpModelLoader.cpp */; };
 		B8846EF8E504895A4A9EFEC0 /* ofxAssimpTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6F2EE44AD04FF549AB13699 /* ofxAssimpTexture.cpp */; };
+		E40A328A1D5F04DD00A4F172 /* ofRubyModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E40A32881D5F04DD00A4F172 /* ofRubyModel.cpp */; };
 		E4260D401CF085CD00BA9186 /* ofRubyShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4260D3E1CF085CD00BA9186 /* ofRubyShader.cpp */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1D0A3A1BDC003C02F2 /* main.cpp */; };
@@ -102,6 +103,8 @@
 		D1B370068072AAB890CD42D2 /* pstdint.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = pstdint.h; path = ../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp/Compiler/pstdint.h; sourceTree = SOURCE_ROOT; };
 		D501EB9AF5A65F43CB972589 /* matrix3x3.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = matrix3x3.h; path = ../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp/matrix3x3.h; sourceTree = SOURCE_ROOT; };
 		D825FF1F1EA48B305BB428B7 /* scene.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = scene.h; path = ../../../addons/ofxAssimpModelLoader/libs/assimp/include/assimp/scene.h; sourceTree = SOURCE_ROOT; };
+		E40A32881D5F04DD00A4F172 /* ofRubyModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofRubyModel.cpp; path = ruby/3d/ofRubyModel.cpp; sourceTree = "<group>"; };
+		E40A32891D5F04DD00A4F172 /* ofRubyModel.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ofRubyModel.hpp; path = ruby/3d/ofRubyModel.hpp; sourceTree = "<group>"; };
 		E4260D3E1CF085CD00BA9186 /* ofRubyShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofRubyShader.cpp; path = ruby/3d/ofRubyShader.cpp; sourceTree = "<group>"; };
 		E4260D3F1CF085CD00BA9186 /* ofRubyShader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ofRubyShader.hpp; path = ruby/3d/ofRubyShader.hpp; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -321,6 +324,8 @@
 				E4D8E2C71CF053CD00489045 /* ofRubyVector3D.hpp */,
 				E4260D3E1CF085CD00BA9186 /* ofRubyShader.cpp */,
 				E4260D3F1CF085CD00BA9186 /* ofRubyShader.hpp */,
+				E40A32881D5F04DD00A4F172 /* ofRubyModel.cpp */,
+				E40A32891D5F04DD00A4F172 /* ofRubyModel.hpp */,
 			);
 			name = 3d;
 			sourceTree = "<group>";
@@ -475,6 +480,7 @@
 			files = (
 				E4D8E2C41CF0502400489045 /* ofRubyVector2D.cpp in Sources */,
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
+				E40A328A1D5F04DD00A4F172 /* ofRubyModel.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
 				E4D8E2A91CEF0EF600489045 /* ofRuby.cpp in Sources */,
 				E4D8E2C11CF0337B00489045 /* ofRuby3DSphere.cpp in Sources */,
