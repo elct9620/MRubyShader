@@ -83,6 +83,7 @@ private:
     
     void checkError();
     std::map<const char*, RClass*> classes;
+    std::set<std::string> loadedFiles;
 };
 
 #endif /* ofRuby_hpp */

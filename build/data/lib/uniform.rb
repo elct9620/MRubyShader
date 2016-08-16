@@ -1,3 +1,0 @@
-class Uniform < Hash
-
-end
