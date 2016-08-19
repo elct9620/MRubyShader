@@ -40,6 +40,7 @@ public:
     static mrb_value load(mrb_state* mrb, mrb_value self);
     static mrb_value draw(mrb_state* mrb, mrb_value self);
     static mrb_value setPosition(mrb_state* mrb, mrb_value self);
+    static mrb_value setRotation(mrb_state* mrb, mrb_value self);
 };
 
 static struct mrb_data_type ofRubyModelType { "Model", ofRubyModel::free };

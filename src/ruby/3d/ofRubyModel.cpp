@@ -32,6 +32,7 @@ void ofRubyModel::setup(mrb_state *mrb, RClass *klass) {
     mrb_define_method(mrb, klass, "load", load, MRB_ARGS_REQ(1));
     mrb_define_method(mrb, klass, "draw", draw, MRB_ARGS_NONE());
     mrb_define_method(mrb, klass, "position=", setPosition, MRB_ARGS_REQ(1));
+    mrb_define_method(mrb, klass, "rotation=", setRotation, MRB_ARGS_REQ(1));
 }
 
 mrb_value ofRubyModel::init(mrb_state* mrb, mrb_value self) {
@@ -91,6 +92,21 @@ mrb_value ofRubyModel::setPosition(mrb_state* mrb, mrb_value self) {
     
     ofVec3f ofPosition = ofRuby3DPrimitive::getVector3DFromRuby(position);
     model->instance->setPosition(ofPosition.x, ofPosition.y, ofPosition.z);
+    
+    return self;
+}
+
+mrb_value ofRubyModel::setRotation(mrb_state* mrb, mrb_value self) {
+    struct Model* model;
+    model = (struct Model*) DATA_PTR(self);
+    
+    mrb_value rotation;
+    mrb_get_args(mrb, "o", &rotation);
+    
+    ofVec3f ofRotation = ofRuby3DPrimitive::getVector3DFromRuby(rotation);
+    model->instance->setRotation(0, ofRotation.x, 1, 0, 0);
+    model->instance->setRotation(1, ofRotation.y, 0, 1, 0);
+    model->instance->setRotation(2, ofRotation.z, 0, 0, 1);
     
     return self;
 }

@@ -1,58 +1,61 @@
 class Shader::Function
-  TYPES = %i{vec4 vec3 mat4 mat3}
-  FUNCTIONS = %i{normalize transpose inverse max dot}
+  Shader::TYPES.each do |type|
+    define_method(type.to_sym) { |*args|
+      assert_type(type, *args)
+    }
+  end
 
-  def initialize(return_type, name, parameters = nil, globals = [], &block)
+  Shader::FUNCTIONS.each do |function_name|
+    define_method(function_name.to_sym) { |*args|
+      Node.new(FunctionCall.new(function_name, *args))
+    }
+  end
+
+  def initialize(return_type, name, parameters = [], &block)
     @return_type = return_type
     @name = name
-    @parameters = parameters || []
-    @body = []
-    @globals = globals
-    @locals = []
-    instance_eval(&block) if block_given?
+    @parameters = parameters
+    @code = []
+
+    instance_eval(&block)
   end
 
-  def vairable_exists?(name)
-    @globals.include?(name) || @locals.include?(name)
-  end
-
-  def create_type(name, *args)
-    argc = args.size
-    case argc
-    when 0
-      return Node.new(name)
-    when 1
-      assigned = vairable_exists?(args.first.name.to_s)
-      @locals << args.first.name.to_s unless assigned
-      statment = AssignNode.new(name, args.first, assigned)
-      @body << statment
-      return statment
-    else
-      return Node.new("#{name}(#{args.join(", ")})")
+  def assert_type(name, *args)
+    value = args.first
+    case value
+    when Node
+      return Node.new(Type.new(name), *args) unless value.is_variable? && args.size != 1
     end
+
+    Node.new(TypeValue.new(name, *args))
   end
 
-  def create_function(name, *args)
-    return FunctionNode.new(name, *args)
+  def is(value)
+    AssignNode.new(*value)
+  end
+
+  def export_code(type, name, value)
+    if type.nil?
+      return "#{name} = #{value};"
+    end
+    "#{type} #{name} = #{value};"
   end
 
   def method_missing(name, *args, &block)
-    if TYPES.include?(name)
-      return create_type(name, *args)
-    elsif FUNCTIONS.include?(name)
-      return create_function(name, *args)
-    else
-      # Variable
-      return VariableNode.new(name)
+    value = args.first
+    if value.is_a?(AssignNode)
+      @code << export_code(value.type, name, value)
     end
-  end
 
+    Node.new(Variable.new(name))
+  end
 
   def to_s
     [
       "#{@return_type} #{@name}(#{@parameters.join(", ")}) {",
-      @body.join(";\n") << ";",
-        "}"
+      @code.join("\n"),
+      "}"
     ].join("\n")
   end
+
 end

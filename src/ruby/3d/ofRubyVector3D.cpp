@@ -50,10 +50,28 @@ void ofRubyVector3D::setup(mrb_state *mrb, RClass *klass) {
     mrb_define_method(mrb, klass, "initialize", init, MRB_ARGS_REQ(3));
     
     mrb_define_method(mrb, klass, "z", getZ, MRB_ARGS_NONE());
+    mrb_define_method(mrb, klass, "add", add, MRB_ARGS_REQ(3));
 }
 
 mrb_value ofRubyVector3D::getZ(mrb_state *mrb, mrb_value self) {
     Vector* vector;
     vector = (Vector*) DATA_PTR(self);
     return mrb_float_value(mrb, vector->z);
+}
+
+mrb_value ofRubyVector3D::add(mrb_state *mrb, mrb_value self) {
+    Vector* vector;
+    vector = (Vector*) DATA_PTR(self);
+    
+    mrb_value x;
+    mrb_value y;
+    mrb_value z;
+    
+    mrb_get_args(mrb, "fff", &x, &y, &z);
+    
+    vector->x = vector->x + mrb_float(x);
+    vector->y = vector->y + mrb_float(y);
+    vector->z = vector->z + mrb_float(z);
+    
+    return self;
 }

@@ -45,6 +45,7 @@ mrb_value ofRubyShader::init(mrb_state *mrb, mrb_value self) {
     }
     
     
+    
     DATA_TYPE(self) = &ofRubyShaderType;
     DATA_PTR(self) = NULL;
     
@@ -64,6 +65,7 @@ mrb_value ofRubyShader::draw(mrb_state *mrb, mrb_value self) {
     mrb_get_args(mrb, "&", &block);
     
     shader->instance->begin();
+    
     mrb_funcall(mrb, block, "call", 0); // Call block
     shader->instance->end();
     

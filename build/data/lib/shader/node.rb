@@ -1,78 +1,102 @@
-class Shader::Node
-  attr_reader :name
-
-  def initialize(name, *options)
-    @name = name
-    @options = options || []
-    @operates = []
+class Node < Array
+  def initialize(*args)
+    self.push(*args)
   end
 
-  def <<(other)
-    self
+  def is_variable?
+    self.first.is_a?(Variable)
   end
 
   def +(other)
-    @operates << "+" << other
-    self
+    self.push("+", other)
   end
 
   def -(other)
-    @operates << "-" << other
-    self
+    self.push("-", other)
   end
 
   def *(other)
-    @operates << "*" << other
-    self
+    self.push("*", other)
   end
 
   def /(other)
-    @operates << "/" << other
+    self.push("/", other)
+  end
+
+  def method_missing(name, *args, &block)
+    node = self.first
+    if node.is_a?(Variable)
+      node.send(name, *args)
+    end
     self
   end
 
   def to_s
-    @operates.unshift(" ")
-    "#{@name}#{@operates.join(" ")}"
+    "#{self.join(" ")}"
   end
 end
 
-class Shader::AssignNode < Shader::Node
-  def initialize(type, variable, assigned = false, *options)
-    super(name, *options)
-    @type = type
-    @variable = variable
-    @assigned = assigned
+class AssignNode < Node
+  def type
+    return self.first if self.first.is_a?(Type)
+    nil
   end
 
   def to_s
-    if @assigned
-      "#{@variable.name} = #{@variable.value}"
-    else
-      "#{@type} #{@variable.name} = #{@variable.value}"
+    return super.to_s if type.nil?
+    "#{self[1..-1].join(" ")}"
+  end
+end
+
+class Type
+  def initialize(name)
+    @name = name
+  end
+
+  def to_s
+    @name.to_s.downcase
+  end
+end
+
+class TypeValue
+  def initialize(name, *values)
+    @name = name
+    @values = values
+  end
+
+  def expand_values
+    @values.map do |node|
+      if node.is_a?(Node)
+        node.to_s
+      else
+        node
+      end
     end
   end
-end
 
-class Shader::VariableNode < Shader::Node
-  def initialize(name, *options)
-    super
-    @value = []
-  end
-
-  def <<(input)
-    @value << input
-    self
-  end
-
-  def value
-    @value.join(" ")
-  end
-end
-
-class Shader::FunctionNode < Shader::Node
   def to_s
-    @operates.unshift(" ")
-    "#{@name}(#{@options.join(", ")})#{@operates.join(" ")}"
+    "#{@name}(#{expand_values.join(", ")})"
   end
 end
+
+class FunctionCall < TypeValue
+end
+
+class Variable
+  def initialize(name)
+    @name = name
+    @append = []
+  end
+
+  def method_missing(name, *args, &block)
+    @append << name
+  end
+
+  def to_s
+    if @append.size > 0
+      return "#{@name.to_s}.#{@append.join(".")}"
+    end
+    @name.to_s
+  end
+end
+

@@ -35,8 +35,10 @@ public:
     static struct Vector* alloc(mrb_state* mrb);
     
     // Class Method
-    static mrb_value getZ(mrb_state* mrb, mrb_value slef);
+    static mrb_value getZ(mrb_state* mrb, mrb_value self);
+    static mrb_value add(mrb_state* mrb, mrb_value self);
 };
+
 
 static struct mrb_data_type ofRubyVector3DType = { "Vector3D", ofRubyVector3D::free };
 
