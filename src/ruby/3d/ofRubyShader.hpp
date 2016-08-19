@@ -40,7 +40,8 @@ public:
     static mrb_value setFragmentShader(mrb_state* mrb, mrb_value self);
     
     // Helper Method
-    
+   
+    static ofImage sampler;
     
 };
 

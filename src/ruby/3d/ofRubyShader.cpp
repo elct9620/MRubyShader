@@ -10,6 +10,8 @@
 
 const char* ofRubyShader::NAME = "Shader";
 
+ofImage ofRubyShader::sampler;
+
 void ofRubyShader::free(mrb_state *mrb, void *ptr) {
     Shader* shader = static_cast<Shader*>(ptr);
     
@@ -34,6 +36,8 @@ void ofRubyShader::setup(mrb_state *mrb, RClass *klass) {
     mrb_define_method(mrb, klass, "fragment=", setFragmentShader, MRB_ARGS_REQ(1));
     mrb_define_method(mrb, klass, "bind", bind, MRB_ARGS_OPT(3));
     mrb_define_method(mrb, klass, "apply", apply, MRB_ARGS_NONE());
+    
+    sampler.load("sampler.jpg");
 }
 
 mrb_value ofRubyShader::init(mrb_state *mrb, mrb_value self) {
@@ -43,8 +47,6 @@ mrb_value ofRubyShader::init(mrb_state *mrb, mrb_value self) {
     if(shader) {
         free(mrb, shader);
     }
-    
-    
     
     DATA_TYPE(self) = &ofRubyShaderType;
     DATA_PTR(self) = NULL;
@@ -65,7 +67,7 @@ mrb_value ofRubyShader::draw(mrb_state *mrb, mrb_value self) {
     mrb_get_args(mrb, "&", &block);
     
     shader->instance->begin();
-    
+    shader->instance->setUniformTexture("_EnvMap", sampler.getTexture(), 0);
     mrb_funcall(mrb, block, "call", 0); // Call block
     shader->instance->end();
     

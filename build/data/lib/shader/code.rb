@@ -9,6 +9,8 @@ class Shader::Code
     define_method(keyword.to_sym) do |type, name|
       keyword = "in" if keyword.to_s == "input"
       keyword = "out" if keyword.to_s == "output"
+      type = "sampler2D" if type.to_s == "sampler2d"
+      type = "sampler2DRect" if type.to_s == "sampler2drect"
       @varying << "#{keyword} #{type} #{name};"
     end
   end
