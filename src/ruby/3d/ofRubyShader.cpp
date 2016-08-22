@@ -37,7 +37,7 @@ void ofRubyShader::setup(mrb_state *mrb, RClass *klass) {
     mrb_define_method(mrb, klass, "bind", bind, MRB_ARGS_OPT(3));
     mrb_define_method(mrb, klass, "apply", apply, MRB_ARGS_NONE());
     
-    sampler.load("sampler.jpg");
+    sampler.load("texture.jpg");
 }
 
 mrb_value ofRubyShader::init(mrb_state *mrb, mrb_value self) {

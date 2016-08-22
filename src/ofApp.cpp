@@ -19,7 +19,7 @@ void ofApp::setup(){
     ruby->loadClass<ofRubyShader>();
     ruby->loadClass<ofRubyModel>();
     
-    ruby->load("lib/material.rb");
+    ruby->load("lib/shader.rb");
     ruby->load("app.rb");
     if(ruby->constDefined("Application")) {
         appInstance = ruby->newObject("Application");

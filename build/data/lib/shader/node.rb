@@ -1,102 +1,102 @@
-class Node < Array
-  def initialize(*args)
-    self.push(*args)
-  end
-
-  def is_variable?
-    self.first.is_a?(Variable)
+module Shader::Calculable
+  def operation
+    @operation ||= []
   end
 
   def +(other)
-    self.push("+", other)
+    operation.push("+", other)
+    BracketsNode.new(self)
   end
 
   def -(other)
-    self.push("-", other)
+    operation.push("-")
+    operation.push(other) unless other.nil?
+    BracketsNode.new(self)
   end
 
   def *(other)
-    self.push("*", other)
+    operation.push("*", other)
+    BracketsNode.new(self)
   end
 
   def /(other)
-    self.push("/", other)
+    operation.push("/", other)
+    BracketsNode.new(self)
   end
 
-  def method_missing(name, *args, &block)
-    node = self.first
-    if node.is_a?(Variable)
-      node.send(name, *args)
-    end
-    self
-  end
-
-  def to_s
-    "#{self.join(" ")}"
-  end
-end
-
-class AssignNode < Node
-  def type
-    return self.first if self.first.is_a?(Type)
-    nil
-  end
-
-  def to_s
-    return super.to_s if type.nil?
-    "#{self[1..-1].join(" ")}"
-  end
-end
-
-class Type
-  def initialize(name)
-    @name = name
-  end
-
-  def to_s
-    @name.to_s.downcase
-  end
-end
-
-class TypeValue
-  def initialize(name, *values)
-    @name = name
-    @values = values
-  end
-
-  def expand_values
-    @values.map do |node|
-      if node.is_a?(Node)
-        node.to_s
+  def expanded_operation
+    operation.map do |node|
+      if node.respond_to?(:to_expression)
+        node.to_expression
       else
-        node
+        node.to_s
       end
     end
   end
 
-  def to_s
-    "#{@name}(#{expand_values.join(", ")})"
+  def to_expression
+    return to_s if operation.empty?
+    "#{to_s} #{expanded_operation.join(" ")}"
   end
 end
 
-class FunctionCall < TypeValue
-end
+class Shader::AssignNode
+  def initialize(type, *args)
+    @type = type
+    @expression = args.shift
 
-class Variable
-  def initialize(name)
-    @name = name
-    @append = []
-  end
-
-  def method_missing(name, *args, &block)
-    @append << name
-  end
-
-  def to_s
-    if @append.size > 0
-      return "#{@name.to_s}.#{@append.join(".")}"
+    unless type.is_a?(Type) && !@expression.nil?
+      @expression = @type
+      @type = nil
     end
-    @name.to_s
+  end
+
+  def expression
+    return @expression.to_expression if @expression.respond_to?(:to_expression)
+    @expression
+  end
+
+  def is_const?(name)
+    ("A".."Z").include?(name.to_s[0])
+  end
+
+  def to(name)
+    name = "-#{name}" if @negative
+    return "#{name} = #{expression};" if @type.nil?
+    return "#{@type.to_typename} #{name} = #{expression};" unless is_const?(name)
+    "const #{@type.to_typename} #{name} = #{expression};"
+  end
+
+  def to_s
+    to(nil)
   end
 end
 
+class Shader::ExpressionNode
+  include Calculable
+end
+
+class Shader::NumberNode
+  include Calculable
+
+  def initialize(value)
+    @value = value
+  end
+
+  def to_s
+    @value.to_s
+  end
+end
+
+class Shader::BracketsNode
+  include Calculable
+
+  def initialize(content)
+    @content = content
+  end
+
+  def to_s
+    return "(#{@content.to_expression})" if @content.respond_to?(:to_expression)
+    "(#{@content.to_s})"
+  end
+end
