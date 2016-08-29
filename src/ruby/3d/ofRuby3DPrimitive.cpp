@@ -109,7 +109,8 @@ mrb_value ofRuby3DPrimitive::setPosition(mrb_state *mrb, mrb_value self) {
     mrb_value newPosition;
     mrb_get_args(mrb, "o", &newPosition);
     
-    primitive->instance->setPosition(getVector3DFromRuby(newPosition));
+    ofVec3f ofPosition = getVector3DFromRuby(newPosition);
+    primitive->instance->setPosition(ofPosition.x, ofPosition.y, ofPosition.z);
     return self;
 }
 

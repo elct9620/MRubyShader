@@ -44,12 +44,18 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
+    ofRubyArgument *args = ruby->buildArgument(1);
+    args->push(key);
+    ruby->call("on_key_down", appInstance, 1, args->getValues());
+    delete(args);
 }
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
-
+    ofRubyArgument *args = ruby->buildArgument(1);
+    args->push(key);
+    ruby->call("on_key_up", appInstance, 1, args->getValues());
+    delete(args);
 }
 
 //--------------------------------------------------------------
