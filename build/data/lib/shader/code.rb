@@ -56,7 +56,7 @@ class Shader::Code
 
   def to_s
     [
-      "#version 150",
+      "#version 410",
       @header.join("\n"),
       @body.join("\n")
     ].join("\n")

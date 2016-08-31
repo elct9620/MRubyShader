@@ -18,6 +18,9 @@
 #include "mruby/class.h"
 #include "mruby/string.h"
 
+#include "ofRuby3DPrimitive.hpp"
+#include "ofRubyTexture.hpp"
+
 class ofRubyShader {
 public:
     static const char* NAME;
@@ -38,11 +41,8 @@ public:
     static mrb_value apply(mrb_state* mrb, mrb_value slef);
     static mrb_value setVertexShader(mrb_state* mrb, mrb_value self);
     static mrb_value setFragmentShader(mrb_state* mrb, mrb_value self);
-    
-    // Helper Method
-   
-    static ofImage sampler;
-    
+    static mrb_value setTexture2D(mrb_state* mrb, mrb_value self);
+    static mrb_value setVector3D(mrb_state* mrb, mrb_value self);
 };
 
 static struct mrb_data_type ofRubyShaderType = { "Shader", ofRubyShader::free };

@@ -4,6 +4,7 @@
 void ofApp::setup(){
     ofEnableSeparateSpecularLight();
     ofEnableDepthTest();
+    ofEnableNormalizedTexCoords();
     glShadeModel(GL_SMOOTH);
     glEnable(GL_NORMALIZE);
     
@@ -18,6 +19,7 @@ void ofApp::setup(){
     ruby->loadClassFrom<ofRubyVector3D>("Vector2D");
     ruby->loadClass<ofRubyShader>();
     ruby->loadClass<ofRubyModel>();
+    ruby->loadClass<ofRubyTexture>();
     
     ruby->load("lib/shader.rb");
     ruby->load("app.rb");
@@ -47,7 +49,7 @@ void ofApp::keyPressed(int key){
     ofRubyArgument *args = ruby->buildArgument(1);
     args->push(key);
     ruby->call("on_key_down", appInstance, 1, args->getValues());
-    delete(args);
+    delete args;
 }
 
 //--------------------------------------------------------------
@@ -55,27 +57,46 @@ void ofApp::keyReleased(int key){
     ofRubyArgument *args = ruby->buildArgument(1);
     args->push(key);
     ruby->call("on_key_up", appInstance, 1, args->getValues());
-    delete(args);
+    delete args;
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y ){
-
+    ofRubyArgument *args = ruby->buildArgument(2);
+    args->push(x);
+    args->push(y);
+    ruby->call("on_mouse_moved", appInstance, 2, args->getValues());
+    delete args;
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
-
+    ofRubyArgument *args = ruby->buildArgument(3);
+    args->push(x);
+    args->push(y);
+    args->push(button);
+    ruby->call("on_mouse_dragged", appInstance, 3, args->getValues());
+    delete args;
 }
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-
+    ofRubyArgument *args = ruby->buildArgument(3);
+    args->push(x);
+    args->push(y);
+    args->push(button);
+    ruby->call("on_mouse_pressed", appInstance, 3, args->getValues());
+    delete args;
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-
+    ofRubyArgument *args = ruby->buildArgument(3);
+    args->push(x);
+    args->push(y);
+    args->push(button);
+    ruby->call("on_mouse_released", appInstance, 3, args->getValues());
+    delete args;
 }
 
 //--------------------------------------------------------------
